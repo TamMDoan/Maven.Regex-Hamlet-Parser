@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -34,6 +35,24 @@ public class HamletParser {
         return result.toString();
     }
 
+    public void writeToFile(String hamletText){
+        File file = new File("leon.txt");
+
+        try{
+            PrintWriter printWriter = new PrintWriter(file);
+            String[] split = hamletText.split("\n");
+
+            for(int i = 0; i < split.length; i++){
+                printWriter.println(split[i]);
+            }
+
+            printWriter.close();
+        }
+        catch(IOException e){
+            System.out.println("HELP");
+        }
+    }
+
     public String getHamletData(){
         return hamletData;
     }
@@ -56,6 +75,22 @@ public class HamletParser {
         String horatioToTariq = matcher.replaceAll("Tariq");
 
         return horatioToTariq;
+    }
+
+    public boolean findHoratio(String hamletText){
+        String horatio = "Horatio";
+        Pattern pattern = Pattern.compile(horatio);
+        Matcher matcher = pattern.matcher(hamletText);
+
+        return matcher.find();
+    }
+
+    public boolean findHamlet(String hamletText){
+        String hamlet = "Hamlet";
+        Pattern pattern = Pattern.compile(hamlet);
+        Matcher matcher = pattern.matcher(hamletText);
+
+        return matcher.find();
     }
 
 }
